@@ -31,24 +31,24 @@ class Solver:
 
     def _add_word(self, words: deque):
         char_list = []
-        word_idx = words[0][0]
+        word_idx = words[0][0] + 1
         for index, value in enumerate(words):
             _, word = value
             if index >= len(word):
                 break
             char_list.append(word[index])
-        self.bohr.add_word("".join(char_list), word_idx)
+        self.bohr.add_word("".join(char_list), {"index": word_idx})
 
     def run(self):
         while True:
-            print("Enter the key:", end=" ")
+            print("Enter the key | Enter !exit to exit:", end=" ")
             key = input()
             if key == self.STOP_KEY:
                 break
 
-            found, pos = self.bohr.find_word(key)
+            found, info = self.bohr.find_word(key)
 
             if found:
-                print("Success! Position:", pos)
+                print("Success! Position:", info["index"])
             else:
                 print("Fail! Try another key!")

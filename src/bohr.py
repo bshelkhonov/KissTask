@@ -14,13 +14,13 @@ class TaskBohr:
     def __init__(self):
         self.root = self.Node()
 
-    def add_word(self, word: str, word_index: int):
+    def add_word(self, word: str, info: dict = None):
         current_node = self.root
         for letter in word:
             if letter in current_node.next:
                 current_node = current_node.next[letter]
             else:
-                new_node = self.Node({"index": word_index})
+                new_node = self.Node(info)
                 current_node.next[letter] = new_node
                 current_node = new_node
 
@@ -35,4 +35,4 @@ class TaskBohr:
             else:
                 return False, None
 
-        return True, current_node.info["index"]
+        return True, current_node.info
