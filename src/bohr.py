@@ -12,21 +12,22 @@ class TaskBohr:
             self.info = info
 
     def __init__(self):
-        self.nodes = [self.Node()]
+        self.root = self.Node()
 
     def add_word(self, word: str, word_index: int):
-        current_node = self.nodes[0]
+        current_node = self.root
         for letter in word:
             if letter in current_node.next:
                 current_node = current_node.next[letter]
             else:
-                self.nodes.append(self.Node({"index": word_index}))
-                self.nodes[-2].next[letter] = self.nodes[-1]
+                new_node = self.Node({"index": word_index})
+                current_node.next[letter] = new_node
+                current_node = new_node
 
     def find_word(self, key: str):
         if len(key) == 0:
             raise ValueError("key must not be empty")
-        current_node = self.nodes[0]
+        current_node = self.root
 
         for letter in key:
             if letter in current_node.next:
